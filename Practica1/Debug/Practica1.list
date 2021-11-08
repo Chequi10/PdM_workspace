@@ -3511,15 +3511,15 @@ int main(void)
  80016dc:	2002      	movs	r0, #2
  80016de:	f7fe ff01 	bl	80004e4 <BSP_LED_Init>
 
-	delayInit(&delayLed1, LED1_DURATION);
+	delayInit(&delayLed1, LED1_duration);
  80016e2:	2164      	movs	r1, #100	; 0x64
  80016e4:	4814      	ldr	r0, [pc, #80]	; (8001738 <main+0x74>)
  80016e6:	f7ff ffad 	bl	8001644 <delayInit>
-	delayInit(&delayLed2, LED2_DURATION);
+	delayInit(&delayLed2, LED2_duration);
  80016ea:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
  80016ee:	4813      	ldr	r0, [pc, #76]	; (800173c <main+0x78>)
  80016f0:	f7ff ffa8 	bl	8001644 <delayInit>
-	delayInit(&delayLed3, LED3_DURATION);
+	delayInit(&delayLed3, LED3_duration);
  80016f4:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
  80016f8:	4811      	ldr	r0, [pc, #68]	; (8001740 <main+0x7c>)
  80016fa:	f7ff ffa3 	bl	8001644 <delayInit>

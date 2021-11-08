@@ -32,9 +32,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define LED1_DURATION 100
-#define LED2_DURATION 500
-#define LED3_DURATION 1000
+#define LED1_duration 100
+#define LED2_duration 500
+#define LED3_duration 1000
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
@@ -79,9 +79,9 @@ int main(void)
 	BSP_LED_Init(LED2);
 	BSP_LED_Init(LED3);
 
-	delayInit(&delayLed1, LED1_DURATION);
-	delayInit(&delayLed2, LED2_DURATION);
-	delayInit(&delayLed3, LED3_DURATION);
+	delayInit(&delayLed1, LED1_duration);
+	delayInit(&delayLed2, LED2_duration);
+	delayInit(&delayLed3, LED3_duration);
 	/* Infinite loop */
 	while (1)
 	{

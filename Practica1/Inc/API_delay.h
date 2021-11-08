@@ -27,20 +27,20 @@
 #include "stm32f4xx_hal.h"
 
 typedef uint32_t tick_t;
-
+/*defino variable booleana*/
 typedef bool bool_t;
 
 
 typedef struct{
-   tick_t startTime;
-   tick_t duration;
-   bool_t running;
+   tick_t startTime;   /*para tomar la cuenta del HAL del timer tick*/
+   tick_t duration;    /*para cargar el tiempo deseado*/
+   bool_t running;     /*booleana para indicar el estado del delay*/
 } delay_t;
 
 
-void delayInit( delay_t * delay, tick_t duration );
-bool_t delayRead( delay_t * delay );
-void delayWrite( delay_t * delay, tick_t duration );
+void delayInit( delay_t * delay, tick_t duration );  /*inicializa solo cargando la duracion y flag del running*/
+bool_t delayRead( delay_t * delay );                 /*para saber en que estado esta el delay*/
+void delayWrite( delay_t * delay, tick_t duration ); /*solo permite definir la duracion*/
 
 
 
