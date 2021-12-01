@@ -8,9 +8,6 @@
 
 bool_t uartInit(){
 
-	bool_t EstadoUart;
-
-	uint8_t miString[] = "BaudRate = 9600;\n\rStopBits = 1;\n\rParity=NONE \n\r";
 
 	  UartHandle.Instance        = USART3;
 
@@ -22,10 +19,15 @@ bool_t uartInit(){
 	  UartHandle.Init.Mode       = UART_MODE_TX_RX;
 	  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
 
+	  bool_t EstadoUart;
+
+	  uint8_t miString[] = "BaudRate = 9600;\n\rData bits = 8;\n\rStopBits = 1;\n\rParity=NONE \n\r";
+
 
 	  if (HAL_UART_Init(&UartHandle) != HAL_OK)
 	  {
 		  EstadoUart = false;
+
 	  }	else {
 		  EstadoUart = true;
 
