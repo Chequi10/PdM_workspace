@@ -7,19 +7,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00002244  080001ac  080001ac  000101ac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       000000e4  080023f0  080023f0  000123f0  2**2
+  2 .rodata       000000e8  080023f0  080023f0  000123f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080024d4  080024d4  0002001c  2**0
+  3 .ARM.extab    00000000  080024d8  080024d8  0002001c  2**0
                   CONTENTS
-  4 .ARM          00000008  080024d4  080024d4  000124d4  2**2
+  4 .ARM          00000008  080024d8  080024d8  000124d8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080024dc  080024dc  0002001c  2**0
+  5 .preinit_array 00000000  080024e0  080024e0  0002001c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080024dc  080024dc  000124dc  2**2
+  6 .init_array   00000004  080024e0  080024e0  000124e0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080024e0  080024e0  000124e0  2**2
+  7 .fini_array   00000004  080024e4  080024e4  000124e4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         0000001c  20000000  080024e4  00020000  2**2
+  8 .data         0000001c  20000000  080024e8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  0002001c  2**0
                   CONTENTS
@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  0002001c  2**0
                   CONTENTS, READONLY
- 13 .debug_info   0000c632  00000000  00000000  0002004c  2**0
+ 13 .debug_info   0000c633  00000000  00000000  0002004c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00001e3a  00000000  00000000  0002c67e  2**0
+ 14 .debug_abbrev 00001e3a  00000000  00000000  0002c67f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000780  00000000  00000000  0002e4b8  2**3
+ 15 .debug_aranges 00000780  00000000  00000000  0002e4c0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 000006b8  00000000  00000000  0002ec38  2**3
+ 16 .debug_ranges 000006b8  00000000  00000000  0002ec40  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00026055  00000000  00000000  0002f2f0  2**0
+ 17 .debug_macro  00026055  00000000  00000000  0002f2f8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000c473  00000000  00000000  00055345  2**0
+ 18 .debug_line   0000c471  00000000  00000000  0005534d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000e1e99  00000000  00000000  000617b8  2**0
+ 19 .debug_str    000e1e9f  00000000  00000000  000617be  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000053  00000000  00000000  00143651  2**0
+ 20 .comment      00000053  00000000  00000000  0014365d  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001be8  00000000  00000000  001436a4  2**2
+ 21 .debug_frame  00001be8  00000000  00000000  001436b0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -671,27 +671,22 @@ void delayWrite( delay_t * delay, tick_t duration )
 
 bool_t uartInit(){
  800067c:	b5b0      	push	{r4, r5, r7, lr}
- 800067e:	b08c      	sub	sp, #48	; 0x30
+ 800067e:	b08e      	sub	sp, #56	; 0x38
  8000680:	af00      	add	r7, sp, #0
 
 	bool_t EstadoUart;
 
-	uint8_t miString[] = "BaudRate = 9600; StopBits = 1; Parity=NONE \n\r";
+	uint8_t miString[] = "BaudRate = 9600;\n\rStopBits = 1;\n\rParity=NONE \n\r";
  8000682:	4b1f      	ldr	r3, [pc, #124]	; (8000700 <uartInit+0x84>)
- 8000684:	463c      	mov	r4, r7
+ 8000684:	1d3c      	adds	r4, r7, #4
  8000686:	461d      	mov	r5, r3
  8000688:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
  800068a:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  800068c:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
  800068e:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  8000690:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
- 8000694:	c407      	stmia	r4!, {r0, r1, r2}
- 8000696:	8023      	strh	r3, [r4, #0]
-		                  BE CAREFUL : Program 7 data bits + 1 parity bit in PC HyperTerminal
-	      - Stop Bit    = One Stop bit
-	      - Parity      = ODD parity
-	      - BaudRate    = 9600 baud
-	      - Hardware flow control disabled (RTS and CTS signals) */
+ 8000694:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
+
 	  UartHandle.Instance        = USART3;
  8000698:	4b1a      	ldr	r3, [pc, #104]	; (8000704 <uartInit+0x88>)
  800069a:	4a1b      	ldr	r2, [pc, #108]	; (8000708 <uartInit+0x8c>)
@@ -725,6 +720,8 @@ bool_t uartInit(){
  80006c4:	4b0f      	ldr	r3, [pc, #60]	; (8000704 <uartInit+0x88>)
  80006c6:	2200      	movs	r2, #0
  80006c8:	61da      	str	r2, [r3, #28]
+
+
 	  if (HAL_UART_Init(&UartHandle) != HAL_OK)
  80006ca:	480e      	ldr	r0, [pc, #56]	; (8000704 <uartInit+0x88>)
  80006cc:	f001 f9d0 	bl	8001a70 <HAL_UART_Init>
@@ -734,27 +731,27 @@ bool_t uartInit(){
 	  {
 		  EstadoUart = false;
  80006d6:	2300      	movs	r3, #0
- 80006d8:	f887 302f 	strb.w	r3, [r7, #47]	; 0x2f
+ 80006d8:	f887 3037 	strb.w	r3, [r7, #55]	; 0x37
  80006dc:	e009      	b.n	80006f2 <uartInit+0x76>
 	  }	else {
 		  EstadoUart = true;
  80006de:	2301      	movs	r3, #1
- 80006e0:	f887 302f 	strb.w	r3, [r7, #47]	; 0x2f
+ 80006e0:	f887 3037 	strb.w	r3, [r7, #55]	; 0x37
 
 		  HAL_UART_Transmit(&UartHandle, (uint8_t *) miString, sizeof(miString)/sizeof(char), 1000);
- 80006e4:	4639      	mov	r1, r7
+ 80006e4:	1d39      	adds	r1, r7, #4
  80006e6:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
- 80006ea:	222e      	movs	r2, #46	; 0x2e
+ 80006ea:	2230      	movs	r2, #48	; 0x30
  80006ec:	4805      	ldr	r0, [pc, #20]	; (8000704 <uartInit+0x88>)
  80006ee:	f001 fa0c 	bl	8001b0a <HAL_UART_Transmit>
 	  }
 
 	  return EstadoUart;
- 80006f2:	f897 302f 	ldrb.w	r3, [r7, #47]	; 0x2f
+ 80006f2:	f897 3037 	ldrb.w	r3, [r7, #55]	; 0x37
 
 }
  80006f6:	4618      	mov	r0, r3
- 80006f8:	3730      	adds	r7, #48	; 0x30
+ 80006f8:	3738      	adds	r7, #56	; 0x38
  80006fa:	46bd      	mov	sp, r7
  80006fc:	bdb0      	pop	{r4, r5, r7, pc}
  80006fe:	bf00      	nop
@@ -766,17 +763,17 @@ bool_t uartInit(){
 
 
 
-void uartSendString(uint8_t *pstring){
+void uartSendString(uint8_t *ptrstring){
  800070c:	b580      	push	{r7, lr}
  800070e:	b084      	sub	sp, #16
  8000710:	af00      	add	r7, sp, #0
  8000712:	6078      	str	r0, [r7, #4]
 
-	uint8_t largo=0;
+	uint8_t longitud=0;
  8000714:	2300      	movs	r3, #0
  8000716:	73fb      	strb	r3, [r7, #15]
 
-	while(*(pstring+largo) != 0) largo++;
+	while(*(ptrstring+longitud) != 0) longitud++;
  8000718:	e002      	b.n	8000720 <uartSendString+0x14>
  800071a:	7bfb      	ldrb	r3, [r7, #15]
  800071c:	3301      	adds	r3, #1
@@ -788,7 +785,7 @@ void uartSendString(uint8_t *pstring){
  8000728:	2b00      	cmp	r3, #0
  800072a:	d1f6      	bne.n	800071a <uartSendString+0xe>
 
-	HAL_UART_Transmit(&UartHandle, pstring, largo, 1000);
+	HAL_UART_Transmit(&UartHandle, ptrstring, longitud, 1000);
  800072c:	7bfb      	ldrb	r3, [r7, #15]
  800072e:	b29a      	uxth	r2, r3
  8000730:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
@@ -888,7 +885,7 @@ void BSP_LED_Init(Led_TypeDef Led)
  80007d8:	46bd      	mov	sp, r7
  80007da:	bd80      	pop	{r7, pc}
  80007dc:	40023800 	.word	0x40023800
- 80007e0:	080024b4 	.word	0x080024b4
+ 80007e0:	080024b8 	.word	0x080024b8
  80007e4:	20000000 	.word	0x20000000
 
 080007e8 <BSP_LED_On>:
@@ -920,7 +917,7 @@ void BSP_LED_On(Led_TypeDef Led)
  8000810:	bd80      	pop	{r7, pc}
  8000812:	bf00      	nop
  8000814:	20000000 	.word	0x20000000
- 8000818:	080024b4 	.word	0x080024b4
+ 8000818:	080024b8 	.word	0x080024b8
 
 0800081c <BSP_LED_Toggle>:
   *     @arg  LED1
@@ -951,7 +948,7 @@ void BSP_LED_Toggle(Led_TypeDef Led)
  8000844:	bd80      	pop	{r7, pc}
  8000846:	bf00      	nop
  8000848:	20000000 	.word	0x20000000
- 800084c:	080024b4 	.word	0x080024b4
+ 800084c:	080024b8 	.word	0x080024b8
 
 08000850 <BSP_PB_Init>:
   *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO 
@@ -3850,7 +3847,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  800182e:	bf00      	nop
  8001830:	40023c00 	.word	0x40023c00
  8001834:	40023800 	.word	0x40023800
- 8001838:	080024bc 	.word	0x080024bc
+ 8001838:	080024c0 	.word	0x080024c0
  800183c:	20000010 	.word	0x20000010
  8001840:	20000014 	.word	0x20000014
 
@@ -4119,7 +4116,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001a3c:	4618      	mov	r0, r3
  8001a3e:	bd80      	pop	{r7, pc}
  8001a40:	40023800 	.word	0x40023800
- 8001a44:	080024cc 	.word	0x080024cc
+ 8001a44:	080024d0 	.word	0x080024d0
 
 08001a48 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4145,7 +4142,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001a64:	4618      	mov	r0, r3
  8001a66:	bd80      	pop	{r7, pc}
  8001a68:	40023800 	.word	0x40023800
- 8001a6c:	080024cc 	.word	0x080024cc
+ 8001a6c:	080024d0 	.word	0x080024d0
 
 08001a70 <HAL_UART_Init>:
   * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
@@ -5054,20 +5051,21 @@ int main(void)
  800209c:	b5b0      	push	{r4, r5, r7, lr}
  800209e:	b088      	sub	sp, #32
  80020a0:	af00      	add	r7, sp, #0
+         handled in milliseconds basis.
+       - Set NVIC Group Priority to 4
+       - Low Level Initialization
+     */
 
-	uint8_t Booteo[] = "Inicializacion Correcta! \n\r";
+  uint8_t mensaje[] = "\nInicializacion Correcta! \n\r";
  80020a2:	4b43      	ldr	r3, [pc, #268]	; (80021b0 <main+0x114>)
  80020a4:	463c      	mov	r4, r7
  80020a6:	461d      	mov	r5, r3
  80020a8:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
  80020aa:	c40f      	stmia	r4!, {r0, r1, r2, r3}
- 80020ac:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
- 80020b0:	e884 0007 	stmia.w	r4, {r0, r1, r2}
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
+ 80020ac:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+ 80020b0:	c407      	stmia	r4!, {r0, r1, r2}
+ 80020b2:	7023      	strb	r3, [r4, #0]
+
   HAL_Init();
  80020b4:	f7fe fc9c 	bl	80009f0 <HAL_Init>
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
@@ -5109,23 +5107,26 @@ int main(void)
   	uint8_t flag = 0;
  80020f6:	2300      	movs	r3, #0
  80020f8:	77fb      	strb	r3, [r7, #31]
-
+/* comprobancion de Inicializacion*/
   if(uartInit()){
  80020fa:	f7fe fabf 	bl	800067c <uartInit>
  80020fe:	4603      	mov	r3, r0
  8002100:	2b00      	cmp	r3, #0
  8002102:	d003      	beq.n	800210c <main+0x70>
-	  BSP_LED_On(LED1); // Correcta la inicializacion
+
+	  BSP_LED_On(LED1);
  8002104:	2000      	movs	r0, #0
  8002106:	f7fe fb6f 	bl	80007e8 <BSP_LED_On>
  800210a:	e002      	b.n	8002112 <main+0x76>
+
   } else {
+
 	  BSP_LED_On(LED3);
  800210c:	2002      	movs	r0, #2
  800210e:	f7fe fb6b 	bl	80007e8 <BSP_LED_On>
   }
 
-  uartSendString(&Booteo);
+  uartSendString(&mensaje);
  8002112:	463b      	mov	r3, r7
  8002114:	4618      	mov	r0, r3
  8002116:	f7fe faf9 	bl	800070c <uartSendString>
@@ -5552,7 +5553,7 @@ LoopFillZerobss:
   ldr   sp, =_estack       /* set stack pointer */
  8002374:	20030000 	.word	0x20030000
   ldr  r3, =_sidata
- 8002378:	080024e4 	.word	0x080024e4
+ 8002378:	080024e8 	.word	0x080024e8
   ldr  r0, =_sdata
  800237c:	20000000 	.word	0x20000000
   ldr  r3, =_edata
@@ -5598,10 +5599,10 @@ Infinite_Loop:
  80023c2:	4798      	blx	r3
  80023c4:	3601      	adds	r6, #1
  80023c6:	e7f2      	b.n	80023ae <__libc_init_array+0x1e>
- 80023c8:	080024dc 	.word	0x080024dc
- 80023cc:	080024dc 	.word	0x080024dc
- 80023d0:	080024dc 	.word	0x080024dc
- 80023d4:	080024e0 	.word	0x080024e0
+ 80023c8:	080024e0 	.word	0x080024e0
+ 80023cc:	080024e0 	.word	0x080024e0
+ 80023d0:	080024e0 	.word	0x080024e0
+ 80023d4:	080024e4 	.word	0x080024e4
 
 080023d8 <_init>:
  80023d8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}

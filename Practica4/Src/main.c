@@ -70,7 +70,7 @@ static void Error_Handler(void);
 int main(void)
 {
 
-	uint8_t Booteo[] = "Inicializacion Correcta! \n\r";
+
   /* STM32F4xx HAL library initialization:
        - Configure the Flash prefetch
        - Systick timer is configured by default as source of time base, but user 
@@ -81,6 +81,9 @@ int main(void)
        - Set NVIC Group Priority to 4
        - Low Level Initialization
      */
+
+  uint8_t mensaje[] = "\nInicializacion Correcta! \n\r";
+
   HAL_Init();
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
 
@@ -99,14 +102,17 @@ int main(void)
   	debounceInit();
 
   	uint8_t flag = 0;
-
+/* comprobancion de Inicializacion*/
   if(uartInit()){
-	  BSP_LED_On(LED1); // Correcta la inicializacion
+
+	  BSP_LED_On(LED1);
+
   } else {
+
 	  BSP_LED_On(LED3);
   }
 
-  uartSendString(&Booteo);
+  uartSendString(&mensaje);
 
   /* Infinite loop */
   while (1)

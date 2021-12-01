@@ -10,17 +10,8 @@ bool_t uartInit(){
 
 	bool_t EstadoUart;
 
-	uint8_t miString[] = "BaudRate = 9600; StopBits = 1; Parity=NONE \n\r";
+	uint8_t miString[] = "BaudRate = 9600;\n\rStopBits = 1;\n\rParity=NONE \n\r";
 
-	  /*##-1- Configure the UART peripheral ######################################*/
-	  /* Put the USART peripheral in the Asynchronous mode (UART Mode) */
-	  /* UART configured as follows:
-	      - Word Length = 8 Bits (7 data bit + 1 parity bit) :
-		                  BE CAREFUL : Program 7 data bits + 1 parity bit in PC HyperTerminal
-	      - Stop Bit    = One Stop bit
-	      - Parity      = ODD parity
-	      - BaudRate    = 9600 baud
-	      - Hardware flow control disabled (RTS and CTS signals) */
 	  UartHandle.Instance        = USART3;
 
 	  UartHandle.Init.BaudRate   = 9600;
@@ -30,6 +21,8 @@ bool_t uartInit(){
 	  UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
 	  UartHandle.Init.Mode       = UART_MODE_TX_RX;
 	  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+
+
 	  if (HAL_UART_Init(&UartHandle) != HAL_OK)
 	  {
 		  EstadoUart = false;
@@ -45,13 +38,13 @@ bool_t uartInit(){
 
 
 
-void uartSendString(uint8_t *pstring){
+void uartSendString(uint8_t *ptrstring){
 
-	uint8_t largo=0;
+	uint8_t longitud=0;
 
-	while(*(pstring+largo) != 0) largo++;
+	while(*(ptrstring+longitud) != 0) longitud++;
 
-	HAL_UART_Transmit(&UartHandle, pstring, largo, 1000);
+	HAL_UART_Transmit(&UartHandle, ptrstring, longitud, 1000);
 
 }
 
