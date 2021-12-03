@@ -674,44 +674,41 @@ bool_t uartInit(){
  800067e:	b092      	sub	sp, #72	; 0x48
  8000680:	af00      	add	r7, sp, #0
 
-
-	  UartHandle.Instance        = USART3;
+	UartHandle.Instance        = USART3;
  8000682:	4b20      	ldr	r3, [pc, #128]	; (8000704 <uartInit+0x88>)
  8000684:	4a20      	ldr	r2, [pc, #128]	; (8000708 <uartInit+0x8c>)
  8000686:	601a      	str	r2, [r3, #0]
-
-	  UartHandle.Init.BaudRate   = 9600;
+	UartHandle.Init.BaudRate   = 9600;
  8000688:	4b1e      	ldr	r3, [pc, #120]	; (8000704 <uartInit+0x88>)
  800068a:	f44f 5216 	mov.w	r2, #9600	; 0x2580
  800068e:	605a      	str	r2, [r3, #4]
-	  UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
  8000690:	4b1c      	ldr	r3, [pc, #112]	; (8000704 <uartInit+0x88>)
  8000692:	2200      	movs	r2, #0
  8000694:	609a      	str	r2, [r3, #8]
-	  UartHandle.Init.StopBits   = UART_STOPBITS_1;
+	UartHandle.Init.StopBits   = UART_STOPBITS_1;
  8000696:	4b1b      	ldr	r3, [pc, #108]	; (8000704 <uartInit+0x88>)
  8000698:	2200      	movs	r2, #0
  800069a:	60da      	str	r2, [r3, #12]
-	  UartHandle.Init.Parity     = UART_PARITY_NONE;
+	UartHandle.Init.Parity     = UART_PARITY_NONE;
  800069c:	4b19      	ldr	r3, [pc, #100]	; (8000704 <uartInit+0x88>)
  800069e:	2200      	movs	r2, #0
  80006a0:	611a      	str	r2, [r3, #16]
-	  UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+	UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
  80006a2:	4b18      	ldr	r3, [pc, #96]	; (8000704 <uartInit+0x88>)
  80006a4:	2200      	movs	r2, #0
  80006a6:	619a      	str	r2, [r3, #24]
-	  UartHandle.Init.Mode       = UART_MODE_TX_RX;
+	UartHandle.Init.Mode       = UART_MODE_TX_RX;
  80006a8:	4b16      	ldr	r3, [pc, #88]	; (8000704 <uartInit+0x88>)
  80006aa:	220c      	movs	r2, #12
  80006ac:	615a      	str	r2, [r3, #20]
-	  UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
+	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
  80006ae:	4b15      	ldr	r3, [pc, #84]	; (8000704 <uartInit+0x88>)
  80006b0:	2200      	movs	r2, #0
  80006b2:	61da      	str	r2, [r3, #28]
 
-	  bool_t EstadoUart;
-
-	  uint8_t miString[] = "BaudRate = 9600;\n\rData bits = 8;\n\rStopBits = 1;\n\rParity=NONE \n\r";
+	bool_t EstadoUart;
+    uint8_t miString[] = "BaudRate = 9600;\n\rData bits = 8;\n\rStopBits = 1;\n\rParity=NONE \n\r";
  80006b4:	4b15      	ldr	r3, [pc, #84]	; (800070c <uartInit+0x90>)
  80006b6:	1d3c      	adds	r4, r7, #4
  80006b8:	461d      	mov	r5, r3
@@ -724,24 +721,22 @@ bool_t uartInit(){
  80006c6:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
  80006ca:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
 
-
-	  if (HAL_UART_Init(&UartHandle) != HAL_OK)
+	  if (HAL_UART_Init(&UartHandle) != HAL_OK){
  80006ce:	480d      	ldr	r0, [pc, #52]	; (8000704 <uartInit+0x88>)
  80006d0:	f001 f9d0 	bl	8001a74 <HAL_UART_Init>
  80006d4:	4603      	mov	r3, r0
  80006d6:	2b00      	cmp	r3, #0
  80006d8:	d003      	beq.n	80006e2 <uartInit+0x66>
-	  {
 		  EstadoUart = false;
  80006da:	2300      	movs	r3, #0
  80006dc:	f887 3047 	strb.w	r3, [r7, #71]	; 0x47
  80006e0:	e009      	b.n	80006f6 <uartInit+0x7a>
 
 	  }	else {
+
 		  EstadoUart = true;
  80006e2:	2301      	movs	r3, #1
  80006e4:	f887 3047 	strb.w	r3, [r7, #71]	; 0x47
-
 		  HAL_UART_Transmit(&UartHandle, (uint8_t *) miString, sizeof(miString)/sizeof(char), 1000);
  80006e8:	1d39      	adds	r1, r7, #4
  80006ea:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
@@ -772,7 +767,6 @@ void uartSendString(uint8_t *ptrstring){
  8000712:	b084      	sub	sp, #16
  8000714:	af00      	add	r7, sp, #0
  8000716:	6078      	str	r0, [r7, #4]
-
 	uint8_t longitud=0;
  8000718:	2300      	movs	r3, #0
  800071a:	73fb      	strb	r3, [r7, #15]
@@ -788,8 +782,7 @@ void uartSendString(uint8_t *ptrstring){
  800072a:	781b      	ldrb	r3, [r3, #0]
  800072c:	2b00      	cmp	r3, #0
  800072e:	d1f6      	bne.n	800071e <uartSendString+0xe>
-
-	HAL_UART_Transmit(&UartHandle, ptrstring, longitud, 1000);
+		HAL_UART_Transmit(&UartHandle, ptrstring, longitud, 1000);
  8000730:	7bfb      	ldrb	r3, [r7, #15]
  8000732:	b29a      	uxth	r2, r3
  8000734:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
